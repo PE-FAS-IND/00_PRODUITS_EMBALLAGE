@@ -1,0 +1,106 @@
+html{
+    width: 100%;
+} 
+
+/* body{ */
+/*
+    width:100%;
+    margin: 0 auto;;
+*/
+/*    width: 50%;*/
+    /* min-width: 400px;
+    background-image: url(images_Aide/logo_IMI_Background.svg);
+    background-repeat:space; */
+/*
+    background-attachment:fixed;
+    background-position:top;
+*/
+/* } */
+
+header{
+    text-align: center;
+}
+
+footer{
+    border-top: 1px dotted red;
+    font-size: 80%;
+    background-color: rgba(255, 0, 0, 0.28);
+}
+
+nav{
+/*    float:left;*/
+    border-top: 8px double red;
+    border-bottom: 8px double red;
+}
+
+section{
+/*    float:left;*/
+    margin: 10px;
+    padding: 0px;
+    border-top: 1px solid red;
+/*    border: 10px solid red*/
+}
+
+h1{
+    color: #de0000;
+}
+
+h2{
+    text-decoration: underline;
+    color: rgb(255, 0, 0);
+}
+
+h3{
+    color: rgba(255, 0, 0, 0.80)
+}
+
+h4{
+    color: rgba(255, 0, 0, 0.60)
+}
+
+h5{
+    color:rgba(255, 0, 0, 0.50);
+}
+
+table
+{
+    border-collapse: collapse;  /* Les bordures du tableau seront collées */
+}
+
+td, th
+{
+    border: 1px solid black;
+}
+
+p{
+    text-align: justify;  
+    background-color: rgba(255, 255, 255, 0.73);
+}
+
+figure{
+/*    border: 1px solid black;*/
+    display: table; /* permet d'avoir la figure qui s'adapte à l'image*/
+    min-width: 200px; /* permet d'avoir la figure qui s'adapte à l'image*/
+}
+
+figure > img{
+/*    width: auto;*/
+/*    overflow: scroll;*/
+    max-width: 100%; /* l'image rétrécis en fonction de la fenêtre mais ne grandis pas plus que sa taille d'origine */
+}
+
+figure > figcaption{
+    text-align: center;
+}
+
+.dateImage{
+    font-style: italic;
+}
+
+.ligne{
+    text-decoration: none;
+}
+
+.flotte {
+    float:left;
+}

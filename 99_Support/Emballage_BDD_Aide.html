@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="fr">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>Aide emballage BDD</title>
+    <link href="Emballage_BDD_Aide_Style.css" rel="stylesheet" media="all" type="text/css">
+<!--  Ajouter des smileys sur la page (site: https://afeld.github.io/emoji-css/)  -->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+<!-- <style type="text/css">
+/*        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}*/
+/*        h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}*/
+/*        body{font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}*/
+/*        body{text-align:center;}*/
+/*        h1,h2,h3{margin:1em 0;}*/
+/*        h1,h2,h3,h4,h5,h6,strong{font-weight:bold;}*/
+/*        figure{*/
+/*            width: 500px;*/
+/*            float: left;*/
+/*            text-align: center;*/
+/*            max-width: 100%;*/
+/*        }*/
+/*      h2{text-decoration: underline}*/
+/*
+        .ligne{text-decoration: none}
+        table
+        {
+            border-collapse: collapse;  /* Les bordures du tableau seront collées (plus joli) */
+        }
+        td, th
+        {
+            border: 1px solid black;
+        }
+*/
+    </style> -->
+    <meta content="LTinguely" name="author">
+    <meta content="Aide emballage BDD" name="description">
+    <meta content="Aide" name="keywords">
+</head>
+<body>
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Titre -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <header>
+<!--    <h2 class="ligne">===================================================================================<br></h2>-->
+        <figure style="display: block">
+            <img src="images_Aide/logo_IMI.png" alt="logo IMI">
+        </figure>
+        <h1 >00_PRODUIT_EMBALLAGE_BDD: <span style="font-style: italic">Aide emballage BDD</span></h1>
+<!--    <h2 class="ligne">===================================================================================<br></h2>-->
+<!--    <div style="width: 950px;" id="hd">-->
+<!--    <div style="margin-left: 387px" id="hd">-->
+<!--    <div style="margin-left: auto" id="hd">-->
+    </header>
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Table des Matières -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <nav>
+        <h2 style="text-decoration: underline">Table des matières</h2>
+        <ul>
+            <li><a href="#Intro">Introduction</a></li>
+            <ul>
+                <li><a href="#Objectif">Objectif</a></li>
+                <li><a href="#Document">Document</a></li>
+            </ul>
+            <li><a href="#FASoftware">Face avant Software (Onglets)</a></li>
+            <ul>
+                <li><a href="#Init">Initialisation</a></li>
+                <li><a href="#Prod">Production</a></li>
+                <ul>
+                    <li><a href="#ImpCmd">Imprimer les n° d'une commande</a></li>
+                    <li><a href="#AffCarton">Afficher le contenu d'un carton</a></li>
+                    <ul>
+                        <li><a href="#RemplacerValve">Remplacer Valve</a></li>
+                    </ul>
+                    <li><a href="#PiecesEmball">Pièces en cours d'emballage</a></li>
+                    <li><a href="#Historique">Pièces déjà emballées (historique)</a></li>
+                    <li><a href="#Certificat">Certificat</a></li>
+                    <li><a href="#Quitter">Quitter</a></li>
+                </ul>
+                <li><a href="#Safe">Safe</a></li>
+                <li><a href="#Maintenance">Maintenance</a></li>
+            </ul>
+            <li><a href="#cmd">Commandes</a></li>
+            <ul>
+                <li><a href="#cmdInterne">Commande interne</a></li>
+                <li><a href="#mellotpaspossible">Mélange des lots pas possible</a></li>
+                <ul>
+                    <li><a href="#mellotpaspossibleReprendreCmd">Reprendre commande</a></li>
+                </ul>
+            </ul>
+            <li><a href="#TablesBDD">Tables BDD</a></li>
+            <ul>
+                <li><a href="#TableEmballage">Table Emballage</a></li>
+                <li><a href="#TableCorrespondance">Table correspondance</a></li>
+                <li><a href="#TableParam">Table paramètres d'emballage</a></li>
+                <ul>
+                    <li><a href="#RemplirParamProduit">Comment remplir la table "EMBALLAGE_PARAM"</a></li>
+                        <ul>
+                            <li><a href="#typeValve">Type de valve</a></li>
+                            <li><a href="#NoTest">Pas de test</a></li>
+                        </ul>
+                </ul>
+                <li><a href="#TableCODEGESTION">Table gestion code-barre</a></li>
+                <li><a href="#TableMETA">Table META</a></li>
+            </ul>
+            <li><a href="#ChargParam">Chargement des Paramètres d'emballage</a></li>
+            <ul>
+                <li><a href="#FLAPROP">FLAPROP</a></li>
+                <li><a href="#Autresproduits">Autres produits</a></li>
+            </ul>
+            <li><a href="#ChargParamCOC">Les certificats de conformité</a></li>
+            <li><a href="#Divers">Divers</a></li>
+            <ul>
+                <li><a href="#Installation">Installation</a></li>
+                <li><a href="#GFS4470">Paramétrer le lecteur (Gryphon GFS4470)</a></li>
+                <li><a href="#+Info">Où trouver d'autres informations?</a></li>
+            </ul>
+            <li><a href="#Version">Historique des versions</a></li>
+        </ul>
+    </nav>
+<!--    <h2 class="ligne">===================================================================================<br></h2>-->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Introduction -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <section style="border-top: 0px">
+        <h2><a id="Intro">Introduction</a></h2>
+        <h3><a id="Objectif">Objectif</a></h3>
+        <p>
+            L'objectif principal de ce software d'emballage est de remplacer les 2 softwares d'emballage (1 pour les FLATPROP + 1 pour le MEDIC).<br>
+            Les données d'emballage sont enregistrées dans une table BDD unique (<a href="#TableEmballage">dbo.PRODUIT_EMBALLAGE</a>).<br>
+            Une vérification de tous les tests effectués sur le produit est faite avant d'emballer à fin d'assurer un produit conforme.<br>
+        </p>
+        <h3><a id="Document">Document</a></h3>
+        <p>
+            Ce fichier sert d'aide pour le software d'emballage BDD. Il est découpé en 3 parties.<br>
+            La 1ère partie s'adresse plus directement à la production: <br>
+        </p>
+        <ul>
+            <li>le première chapitre décrit les différentes onglets de la face avant.</li>
+            <li>Un autre chapitre explique comment créer une commande interne, comment reprendre une commande où le mélange des lots n'est pas possible.</li>
+        </ul>
+        <p>
+            La 2ème partie s'adresse plus aux dévelopeurs:<br>
+        </p>
+        <ul>
+            <li>Un chapitre est consacré aux tables BDD. Une table pour l'enregistrement des données et une autre qui sert à la vérification des produits.</li>
+            <li>Un autre chapitre démystifie le chargement des paramètres d'emballage pour le programme.</li>
+            <li>Un autre chapitre explique comment rajouter une imprimante</li>
+        </ul>
+        <p>
+            La dernière partie donne des informations supplémentaires:
+        </p>
+        <ul>
+            <li>Un chapitre concerne les divers (par exemple: Où trouver plus d'infos?, paramétrer le lecteur).</li>
+            <li>L'historique des versions est dans un autre chapitre.</li>
+        </ul>
+    </section>
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Face avant (Onglets) -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <section>
+         <h2><a id="FASoftware">Face avant Software (Onglets)</a></h2>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Init -->
+        <h3><a id="Init">Initialisation</a></h3>
+        <p>
+            Plusieurs informations sont visibles dans l'onglet initialisation:<br>
+        </p>
+        <ol>
+            <li>Nom du PC</li>
+            <li>Etat: indique dans quel état est le software</li>
+            <li>Etat initialisation: LED <b style="background-color: greenyellow">ON</b> => <b style="background-color: greenyellow">initialisation réussit</b></li>
+            <li>Etat de la sécurité: LED <b style="background-color: green">OFF</b> => <b style="background-color: green">mise en sécurité</b></li>
+            <li>Durant le software des informations sont envoyé à la console</li>
+            (exemple: synchronisation des tables, commentaire sur erreur, ...)
+            <li>Indicateur d'erreur</li>
+            <li>Bouton d'aide (ouvre ce document)</li>
+        </ol>
+        <figure>
+            <img src="images_Aide/Onglet_Init.PNG" alt="ongletInit">
+            <figcaption>Onglet Initialisation</figcaption>
+        </figure>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Prod -->
+        <h3><a id="Prod">Production</a></h3>
+        <p>
+            Le programme d'emballage s'ouvre dans l'onglet Production.<br>
+            La fonction principale de ce programme est de vérifier si les valves/blocs ont été testé bonne et d'enregsitrer les données d'emballage en base de donnée.<br>
+            Avant toute chose un vi va apparaître. Ce vi sert à choisir le produit qu'on veut emballer. Ci-dessous le vi " choix_Config" et à sa droite une description de chaque commande:<br>
+        </p>
+        <figure>
+            <img src="images_Aide/Vi_choixProduit.PNG" alt="choixProduit">
+            <!-- -50% pour centrer sous le vi vu que le 0 est au milieu de l'image -->
+            <figcaption style="margin-left: -50%">Vue du Vi "Choix_Config"</figcaption>
+        </figure>
+        <p>
+            <br><!-- retour à la ligne pour l'esthétique -->
+            Il y a aussi des fonctions secondaire dans le software d'emballage. Ils sont accessible que pendant la période où on scanne les pièces pour les emballer. Ces fonctions sont énumérés ci-dessous:
+        </p>
+        <ol>
+            <li>imprimer les n° d'une commande</li>
+            <li>Afficher le contenu d'un carton</li>
+            <li>Pièces en cours d'emballage</li>
+            <li>Pièces déjà emballées (historique)</li>
+            <li>Certificat</li>
+            <li>Quitter</li>
+        </ol>
+        <figure>
+            <img src="images_Aide/Onglet_Prod.PNG" alt="OngletProd">
+            <figcaption>Onglet Production avec le software d'emballage</figcaption>
+        </figure>
+        <!-- Imprimer les n° d'une commande -->
+        <h4><a id="ImpCmd">Imprimer les n° d'une commande</a></h4>
+        <p>
+            Cette fonction énumère les pièces d'une commande après avoir saisi un n° de commande et valider avec "OK".<br>
+            Il est possible d'imprimer cette liste et de supprimer la commande dans la base de donnée SQL.<br>
+            Cette dernière option (supprimer) est seulement disponible aux responsables.
+        </p>
+        <figure>
+            <img src="images_Aide/Vi_ImprimerNoD1Cmd.PNG" alt="imprimerNoD1Cmd">
+            <figcaption>Vue du Vi "imprimer les N° d'une commande" <span class=dateImage>(avec N° cmd: 02947/18-02.01.01)</span></figcaption>
+        </figure>
+        <!-- Afficher le contenu d'un carton -->
+        <h4><a id="AffCarton">Afficher le contenu d'un carton</a></h4>
+        <p>
+            Cette fonction énumère les pièces dans chaque carton en fonction d'une commande.<br>
+            Un responsable peut réimprimer une étiquette d'un carton.<br>
+            Il est possible d'enregistrer le fichier "listeParCarton" en format text (txt) ou word (docx). <br>
+            Ces fichiers vont s'enregistrer au chemin suivant <a href="U:\MTD_PRD_TESTS\EMBALLAGES\PRODUITS\RAPPORTS\listeParCarton">"U:\MTD_PRD_TESTS\EMBALLAGES\PRODUITS\RAPPORTS\listeParCarton"</a>.<br>
+            Il est aussi possible de remplacer une valve ou même de la supprimer en base de donnée. Cette option est vérouillée par un mot de passe. <a href="#RemplacerValve">Un sous-chapitre lui est consacré</a>.<br>
+        </p>
+        <figure>
+            <img src="images_Aide/Vi_afficherLeContenuCarton_20181024_NumSerie.PNG" alt="afficherLeContenuCarton">
+            <figcaption>Vue du Vi "afficher le contenu d'un carton" <span class=dateImage>(avec N° cmd: 03303/18-01.03.01)</span></figcaption>
+        </figure>
+        <h5><a id="RemplacerValve">Remplacer Valve</a></h5>
+        <p>
+            Ce vi permet la suppression ou le remplacement d'une valve dans une commande.<br>
+            Ci-dessous, une image illlustrant le vi "remplacer 1 valve"<br>
+        </p>
+        <figure>
+            <img src="images_Aide/Vi_remplacer1valve.PNG" alt="remplacer1valve">
+            <figcaption>Vue du Vi "remplacer 1 valve" <span class=dateImage>(avec SN_PRODUIT: 111210650230180003)</span></figcaption>
+        </figure>
+        <p>
+            Pour supprimer ou remplacer une valve, il faut que la commande ne soit pas bouclé dans la GPAO.<br>
+            C'est-à-dire que la commande est bouclé lorsque la case "contrôle" de la commande est coché dans la GPAO (Voir image ci-dessous).<br>
+            <i class="em em-warning"></i> <b style="background-color: red">Il n'y a pas de garde fou!</b> Aucune vérification de test est faite <b style="background-color: red">sur la valve remplaçante</b> <i class="em em-warning"></i><br>
+        </p>
+        <figure>
+            <img src="images_Aide/GPAO_Emballage_20180910.PNG" alt="GPAO_emballage">
+            <figcaption>Vue du "mode" Emballage de la GPAO <span class=dateImage>(20180910)</span></figcaption>
+        </figure>
+        <!-- Pièces en cours d'emballage -->
+        <h4><a id="PiecesEmball">Pièces en cours d'emballage</a></h4>
+        <p>
+            Cette fonction énumère les pièces en cours d'emballage.<br>
+            En entrant un No de pièce valide dans le champs "Sélectionner l'élément", la pièce sera mise en évidence dans la liste.<br>
+        </p>
+        <figure>
+            <img src="images_Aide/Vi_AfficheSerieEnCours.PNG" alt="AfficheSerieEnCours">
+            <figcaption>Vue du Vi "afficher série en cours"</figcaption>
+        </figure>
+        <!-- Pièces déjà emballées (historique) -->
+        <h4><a id="Historique">Pièces déjà emballées (historique)</a></h4>
+        <p>
+            Cette fonction énumère toutes les pièces déjà emballées du produit sélectionné.<br>
+            En entrant un No de pièce valide dans le champs "Entrez le No de la pièce ...", la pièce sera mise en évidence dans la liste.<br>
+        </p>
+        <figure>
+            <img src="images_Aide/Vi_AfficheHistorique.PNG" alt="AfficherHistorique">
+            <figcaption>Vue du Vi "Afficher historique"</figcaption>
+        </figure>
+         <!-- Certificat -->
+        <h4><a id="Certificat">Certificat</a></h4>
+        <p>
+            Cette fonction permet en scannant un bloc d'imprimer/d'enregistrer en PDF son certificat.<br>
+            Le certificat est aussi créer lorsqu'on emballe.<br>
+        </p>
+        <!-- Quitter -->
+        <h4><a id="Quitter">Quitter</a></h4>
+        <p>
+            Cette fonction arrête la série.
+            Le programme se mettra en mode "Safe".
+        </p>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Safe -->
+        <h3><a id="Safe">Safe</a></h3>
+        <p>
+            Le mode Safe est actif lorsque le programme est mise en sécurité.<br>
+            Depuis ce mode, il est possible :<br>
+        </p>   
+        <ol>
+            <li>De recommencer l'initialisation</li>
+            <li>D'aller dans l'onglet de maintenance</li>
+            <li>De quitter le programme</li>
+        </ol>
+        <figure>
+            <img src="images_Aide/Onglet_Safe.PNG" alt="OngletSafe">
+            <figcaption>Onglet Safe</figcaption>
+        </figure>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Maintenance -->
+        <h3><a id="Maintenance">Maintenance</a></h3>
+        <p>
+            Le mode maintenance est protégé par un mot de passe.<br>
+            Avant d'afficher l'onglet, une console va s'ouvrir et va chercher les imprimantes zebra visible sur le réseau.<br>
+            Dans cet onglet, il est possible de:<br>
+        </p>
+        <ol>
+            <li>Quitter le mode maintenance (pour aller en mode Safe)</li>
+            <li>Lire la table bdd local</li>
+            <li>Initialiser la table hardware</li>
+            <li>Rechercher le Port Com du lecteur de code barre</li>
+            <li>Choisir les imprimantes par défaut (1 pour imprimer les étiquettes et l'autre pour les certificats)</li>
+            (choisir l'imprimante dans la liste déroulant avant de cliquer sur le bouton)
+            <li>Choisir le décalage à droite par défaut de l'imprimante</li>
+        </ol>
+        <figure>
+            <img src="images_Aide/Onglet_Maintenance_20181025.svg" alt="OngletMaintenance">
+            <figcaption>2X l'onglet Maintenance permet de voir les 2 onglets de la commande onglet</figcaption>
+        </figure>
+        <p>
+            Vous constatez que dans ce mode, il y a une commande onglet qui comporte 2 onglets:<br>
+        </p>
+        <ul>
+            <li>Valeur table bdd: pour la lecture des données de la table bdd local</li>
+            <li>Initialisation: Pour initialiser les différents paramètres (imprimante, port com, ...)</li>
+        </ul>
+    </section>
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Commande -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <section>
+        <h2><a id="cmd">Commandes</a></h2>
+        <p>
+            La liste des commandes contient les commandes de la GPAO qui n'ont pas encore été facturée et qui n'apparaissement pas dans l'historique des commandes.
+        </p>
+        <figure>
+            <img src="images_Aide/Vi_NouvelleSerie.PNG" alt="Vi_NouvelleSerie">
+            <figcaption>VI "nouvelle série" avec liste des commandes</figcaption>
+        </figure>
+        <p>
+            Pour la recherche des commandes, on cherche en fonctions de plusieurs champs. Ces champs changent en fonction du type de l'article:<br>
+        </p>
+        <ul>
+            <li>Pour les articles qui commencent par "12"<i>(FLATPROP)</i> et "17"<i>(FASPROP)</i></li>
+            <ul>
+                <li>NO_ARTICLE</li>
+                <li>NO_FILE</li>
+                <li>DESIGNATION</li>
+            </ul>
+            <li>Pour les articles qui commencent par "01"<i>(Microsol)</i> et "04"<i>(Bacosol)</i></li>
+            <ul>
+                <li>NO_ARTICLE</li>
+                <li>NO_FILE</li>
+            </ul>
+            <li>Pour les autres articles</li>
+            <ul>
+                <li>NO_ARTICLE</li>
+            </ul>
+        </ul>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Commande interne -->
+        <h3><a id="cmdInterne">Commande interne</a></h3>
+        <p>
+            Il est possible de créer une commande interne pour tous les produits. Cette commande est enregistrée dans la table des données d'emballage mais nullement dans la GPAO.<br>
+            Le numéro de la commande interne suit la loi suivant: JJMM/AA-hh.mm.ss<br>
+            Il n'est pas nécessaire d'entrer la quantité d'une commande interne. Pour arrêter la série, il suffit de scanner 2 fois la même pièce ou de quitter la série <i>(bouton quitter)</i>.<br>
+            A la fin de la série, le software vous indique le nombre de pièces dans la commande interne créée précédemment.<br>
+            Aucune étiquette d'emballage est crée pour les commandes internes ni de fichiers "numéroSérie".<br>
+        </p>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- mélange des lots pas possible -->
+        <h3><a id="mellotpaspossible">Mélange des lots pas possible</a></h3>
+        <p>
+            Pour certains produits (comme la F120078), il n'est pas autorisé de mélanger les lots lors de la livraison.<br>
+            Pour ces produits, il faut préciser les différents lots constituant la commande.<br>
+            Ci-dessous, la vu du vi où l'on précise l'année, la semaine et la quantité des lots.<br>
+        </p>
+        <figure>
+            <img src="images_Aide/Vi_tri_des_lots.PNG" alt="Vi_tri_des_lots" width="450">
+            <figcaption>Vu du Vi "tri des lots" pour commencer une commande</figcaption>
+        </figure>
+        <!-- Continuer commande mélange des lots pas possible -->
+        <h4><a id="mellotpaspossibleReprendreCmd">Reprendre commande</a></h4>
+        <p>
+            Il se peut que la commande ne soit pas/ne peut pas être emballée d'un coup. Nous pouvons donc reprendre la commande mais attention aux recommendations suivantes:<br>
+        </p>
+        <p class="flotte">
+            <img src="images_Aide/Attention.gif" alt="GIFAttention" width="90">
+        </p>
+        <ul style="padding-left: 110px">
+            <li><i class="em em-warning"></i><b> Le nombre de cartons peut varier en fonction des lots (quantité par lots, nombre de lots). </b><i class="em em-warning"></i></li>
+            <li>Il ne sera pas possible de continuer un lot plus vieux si un lot plus récent a été emballé.</li>
+            Exemple: Vous avez emballé le lot 1841 ensuite vous commencez à emballer le lot 1839. Vous arrêtez la série et vous la reprenez, il sera impossible de continuer le lots 1839.<br>
+            <li>Si vous ne savez pas la quantité du lot, mettez la valeur maximum.</li>
+            Il sera possible d'imprimer l'étiquette du dernier carton lors de la reprise de la commande.<br>
+            <li>Pour continuer un lot, il suffit d'entrer la quantité restante</li>
+            Ci-dessous, un exemple pour continuer un lot.<br>
+        </ul>
+        <figure>
+            <img src="images_Aide/Vi_tri_des_lots_Continuer.PNG" alt="Vi_tri_des_lots_Continuer" width="450">
+            <figcaption>Vu du Vi "tri des lots" pour continuer une commande</figcaption>
+        </figure>
+    </section>
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Tables BDD -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <section>
+        <h2><a id="TablesBDD">Tables BDD</a></h2>
+        <p>
+            Pour ce projet, il a fallu créer plusieurs table.<br>
+            Ces différentes tables sont développées dans les sous-chapitres suivants.<br>
+        </p>
+        <ul>
+            <li>Pour enregistrer les données d'emballages <i>(dbo.PRODUIT_EMBALLAGE)</i></li>
+            <li>Pour faire la correspondance entre le produit et sa/ses table(s) d'enregistrement de résultat <i>(EMB_CORRESPONDANCE_TABLE)</i></li>
+                <ul>
+                    <li>Cette table sert à la vérification des valves (passée bonne aux différents tests)</li>
+                    <li>Pour éviter les redondances, des tables supplémentaires ont été créées</li>
+                </ul>
+            <li>Pour avoir les paramètres d'emballages des produit <i>(EMBALLAGE_PARAM)</i></li>
+                <ul>
+                    <li>Cette table réunit les paramètres utiles à l'emballage</li>
+                    <li>Pour éviter les redondances, des tables supplémentaires ont été créées</li>
+                </ul>
+            <li>Pour les codes barres des produits <i>(CODE_GESTION)</i></li>
+                <ul>
+                    <li>Cette table réunit tous les codes barres des produits</li>
+                    <li>Pour éviter les redondances, des tables supplémentaires ont été créées</li>
+                    <li>Elle devra être utile pour d'autre projet (je l'espère)</li>
+                </ul>
+            <li>Pour d'autres informations/paramètres <i>(EMB_META)</i></li>
+                <ul>
+                    <li>Cette table sert à mettre des informations qui ne mérite pas une table dédiée</li>
+                    <li>Exemple: les produits utliser pour un certificats spécifique</li>
+                </ul>
+        </ul>
+
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Table Emballage -->
+        <h3><a id="TableEmballage">Table Emballage: <span class=dateImage>dbo.PRODUIT_EMBALLAGE</span></a></h3>
+        <p>
+            Les données d'emballage sont enregistrées dans cette table.
+            Ci-dessous,vous trouvez les noms des colonnes et leur type:
+        </p>
+        <figure>
+            <img src="images_Aide/Table_PRODUIT_EMBALLAGE_type.PNG" alt="Table_PRODUIT_EMBALLAGE_Type">
+            <figcaption>Table BDD: PRODUIT_EMBALLAGE </figcaption>
+        </figure>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Table Correspondance -->
+        <h3><a id="TableCorrespondance">Table Correspondance</a></h3>
+        <p>
+            Cette table sert à faire la correspondance entre le produit et sa/ses table(s) d'enregistrement de résultat.<br>
+            Après une discution avec M.Evan Alon (AEV) le 22.08.2018, plusieurs tables ont été créées:<br>
+        </p>
+        <ol>
+            <li>EMB_CORRESPONDANCE_TABLE: Table principale pour la correspondance.</li>
+            Pour éviter "les doublons", lorsqu'un champ est récurrant, une table à part est créée (un ID par valeur de champs différents)<br>
+            et l'ID est enregistré dans la table "EMB_CORRESPONDANCE_TABLE"<br>
+        </ol>
+        <p>Tables secondaires (corrrespondance entre ID et la valeur du champ):</p>
+        <ol start="2">
+            <li>EMB_FAMILLE_VALVE: correspond au nom du champs des familles</li>
+            <li>EMB_CHAMPS_VALVE: correspond au nom du champ des numéros de valves/produits</li>
+            <li>EMB_CHAMPS_CONDITION: correspond au nom du champ des conditions</li>
+            <li>EMB_VALEURS_CONDITION: correspond à la valeur du champ des conditions</li>
+            <li>EMB_CHAMPS_RESULTAT: correpond au nom du champ du résultat</li>
+            <li>EMB_CHAMPS_ORDRE: correspond au nom du champ ordre</li>
+                Ce champ correspond principalement au champs de la date. Il est trié par ordre descendant pour avoir le dernier enregistrement en 1er.<br>
+        </ol>
+        <p>
+            Ci-dessous les différentes tables (secondaires) de correspondance remplies <span class=dateImage>(entre parenthèse: date de l'image)</span>:<br>
+            <!-- figure EMB_FAMILLE_VALVE -->
+            <figure>
+                <img src="images_Aide/Table_EMB_FAMILLE_VALVE_20200225.PNG" alt="Table_EMB_FAMILLE_VALVE">
+                <figcaption>Table "EMB_FAMILLE_VALVE" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            <!-- figure EMB_CHAMPS_VALVE -->
+            <figure>
+                <img src="images_Aide/Table_EMB_CHAMPS_VALVE_20200225.PNG" alt="Table_EMB_CHAMPS_VALVE">
+                <figcaption>Table "EMB_CHAMPS_VALVE" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            <!-- figure EMB_CHAMPS_CONDITION -->
+            <figure>
+                <img src="images_Aide/Table_EMB_CHAMPS_CONDITION_20200225.PNG" alt="Table_EMB_CHAMPS_CONDITION">
+                <figcaption>Table "EMB_CHAMPS_CONDITION" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            <!-- figure EMB_VALEURS_CONDITION -->
+            <figure>
+                <img src="images_Aide/Table_EMB_VALEURS_CONDITION_20200225.PNG" alt="Table_EMB_VALEURS_CONDITION">
+                <figcaption>Table "EMB_VALEURS_CONDITION" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            <!-- figure EMB_CHAMPS_RESULTAT -->
+            <figure>
+                <img src="images_Aide/Table_EMB_CHAMPS_RESULTAT_20200225.PNG" alt="Table_EMB_CHAMPS_RESULTAT">
+                <figcaption>Table "EMB_CHAMPS_RESULTAT" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            <!-- figure EMB_CHAMPS_ORDRE -->
+            <figure>
+                <img src="images_Aide/Table_EMB_CHAMPS_ORDRE_20200225.PNG" alt="Table_EMB_CHAMPS_ORDRE">
+                <figcaption>Table "EMB_CHAMPS_ORDRE" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            <br>
+        </p>
+        <p>
+            <!-- figure EMB_CORRESPONDANCE_TABLE -->
+            Ceci dessous-la table "EMB_CORRESPONDANCE_TABLE" comme enregsitrer en BDD:<br>
+            <figure>
+                <img src="images_Aide/Table_EMB_CORRESPONDANCE_TABLE_20200225.PNG" alt="Table_EMB_CORRESPONDANCE_TABLE">
+                <figcaption>Table "EMB_CORRESPONDANCE_TABLE" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            Ceci dessous la table "EMB_CORRESPONDANCE_TABLE" en replacant les "ID" par leurs valeurs.<br>
+            C'est-à-dire en utilisant les tables secondaires.<br>
+            <figure>
+                <img src="images_Aide/Table_EMB_CORRESPONDANCE_TABLE_Join_20200225.PNG" alt="Table_EMB_CORRESPONDANCE_TABLE_Join">
+                <figcaption>Table "EMB_CORRESPONDANCE_TABLE" avec tables secondaires <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+        </p>
+
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Table EMBALLAGE_PARAM -->
+        <h3><a id="TableParam">Table paramètres d'emballage</a></h3>
+        <p>
+            Cette table réunit tous les paramètres nécessaire à l'emballage.<br> 
+            Vous trouverez plus d'information sur les parmètres d'emballage au chapitre suivant.<br>
+            Cette table a un lien avec la table "EMB_FAMILLE_VALVE".<br>
+            <br>
+            Ceci dessous-la table "EMBALLAGE_PARAM" comme enregsitrer en BDD:<br>
+            <figure>
+                <img src="images_Aide/Table_EMBALLAGE_PARAM_20200225.PNG" alt="Table_EMBALLAGE_PARAM">
+                <figcaption>Table "EMBALLAGE_PARAM" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            Ceci dessous la table "EMBALLAGE_PARAM" en replacant les "ID" par leurs valeurs.<br>
+            C'est-à-dire en utilisant les tables secondaires.<br>
+            <figure>
+                <img src="images_Aide/Table_EMBALLAGE_PARAM_Join_20200225.PNG" alt="Table_EMBALLAGE_PARAM_Join">
+                <figcaption>Table "EMBALLAGE_PARAM" avec tables secondaires <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+        </p>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Comment remplir la table "EMBALLAGE_PARAM -->
+        <h4><a id="RemplirParamProduit">Comment remplir la table "EMBALLAGE_PARAM"</a></h4>
+        <p>
+            Pour des produits uniques qui ont une étiquette, il suffit de remplir les champs correctements:
+        </p>
+        <ul>
+            <li>indice_produit: indice produit (utiliser dans le code barre)</li>
+            <li>affiche_code_barre_client: Est-ce que le code barre du client est imprimé sur l'étiquette d'emballage?</li>
+            <li>melange_des_lots_possible: Est-ce que le mélange des lots est possible?</li>
+                Si ce n'est pas possible, le programme va demander à trier les lots.
+            <li>Famille: correspond à la valeur mise dans la table "EMB_CORRESPONDANCE_TABLE"</li>
+                Il permet de faire la correspondance entre le produit et ses tables.<br>
+        </ul>
+        <p>
+            Les sous-chapitres suivants explique les différentes variantes pour remplir la table "EMBALLAGE_PARAM".
+        </p>
+        <!-- Types de valve -->
+        <h5><a id="typeValve">Type de valve</a></h5>
+        <p>
+            Il est possible qu'on veuille rajouter un type de valve (par exemple: FASPROP "17_2").<br>
+            Pour cela, il suffit de mettre dans le champs "NOVALVE_FILTRE" une partie du No_Article suivi d'un "%" (exemple: 17_2%).<br>
+        </p>       
+        <p>
+            Le champ "indice_produit , il est possible de rajouter un séparateur.<br>
+            Pour cela, il suffit de séparer le nom du champ ("champ_<i>NomDuChampOuOnTireLInfo</i>") et le séparateur (;) par un point-virgule(;).<br>
+            (Par exemple pour FASPROP, le code barre est un 2D qui suit la règle suivante: "ID_ARTICLE<b>;</b>INDICE_GPAO<i>(numérique)</i><b>;</b>DATECODE(AASSIIII)<b>;</b>Facultatif")<br>
+            Pour le champ "indice_produit, la valeur retournée par la GPAO sera transformé en numérique (a = 1, ... , z = 26).<br>
+        </p>
+        <!-- Pas de test -->
+        <h5><a id="NoTest">Pas de test</a></h5>
+        <p>
+            Certains produits ne font pas de test (ou les données de test ne sont pas enregistrées en BDD) mais comporte une étiquette pour la traçabilité à l'emballage.<br>
+            Pour identifier ces produits, la valeur du champ Famille doit commencer par "NoTest".<br>
+            (Exemple: 04-341E-11-11 F04313 4212 SDGNUL  24V DC  10W)<br>
+        </p>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Table CODE_GESTION -->
+        <h3><a id="TableCODEGESTION">Table gestion code-barre</a></h3>
+        <p>
+            Cette table concerne les informations sur les code-barres des produits FAS.<br>
+            Comme pour la table "EMB_CORRESPONDANCE_TABLE", des tables secondaires ont été crées pour éviter les redondances:<br>
+        </p>
+        <ul>
+            <li>CODE_FORMAT: correspond au format/type du code-barre</li>
+            <li>CODE_FORMATDATE: correspond au format de la date</li>
+            <ul>
+                <li>Ci-dessous, un tableau explique la codification du champs "date":<br>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>Année</td>
+                        </tr>
+                        <tr>
+                            <td>M</td>
+                            <td>Mois</td>
+                        </tr>
+                        <tr>
+                            <td>S</td>
+                            <td>Semaine</td>
+                        </tr>
+                        <tr>
+                            <td>Q</td>
+                            <td>Quantité livrée</td>
+                        </tr>
+                        <tr>
+                            <td>I</td>
+                            <td>"Index"</td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+        </ul>
+        <p>
+            Ci-dessous les différentes tables (secondaires) de correspondance remplies <span class=dateImage>(entre parenthèse: date de l'image)</span>:<br>
+            <!-- figure CODE_FORMAT -->
+            <figure>
+                <img src="images_Aide/Table_CODE_FORMAT_20200225.PNG" alt="Table_CODE_FORMAT">
+                <figcaption>Table "CODE_FORMAT" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            <!-- figure CODE_FORMATDATE -->
+            <figure>
+                <img src="images_Aide/Table_CODE_FORMATDATE_20200225.PNG" alt="Table_CODE_FORMATDATE">
+                <figcaption>Table "CODE_FORMATDATE" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            <br>
+        </p>
+        <p>
+            <!-- figure CODE_GESTION -->
+            Ceci dessous une partie de la table "CODE_GESTION" comme enregsitrer en BDD:<br>
+            <figure>
+                <img src="images_Aide/Table_CODE_GESTION_20200225.PNG" alt="Table_CODE_GESTION">
+                <figcaption>Table "CODE_GESTION" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            Ceci dessous une partie de la table "CODE_GESTION" en replacant les "ID" par leurs valeurs.<br>
+            C'est-à-dire en utilisant les tables secondaires.<br>
+            <figure>
+                <img src="images_Aide/Table_CODE_GESTION_Join_20200225.PNG" alt="Table_CODE_GESTION_Join">
+                <figcaption>Table "CODE_GESTION" avec tables secondaires <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+
+            Ci-dessous quelques explications pour les champs:<br>
+        </p>
+        <ul>
+            <li>codebarre_fixe: partie fixe du code barre</li>
+            <li>codebarre_fixefin: partie final du code barre fixe</li>
+                le code barre fixe se compose de 3 parties: <br>
+                codebarre_fin + indice_produit + codebarre_fixe_fin<br>
+                Elle n'est pas prise en compte lors du choix du produit par scannage.<br>
+            <li>longeur_no_serie: le nombre de dernière chiffre qui vont être imprimer sur l'étiquette<br>
+                Si ce champ n'est pas remplis, la valeur par défaut est 0.</li>
+        </ul>
+
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Table EMB_META -->
+        <h3><a id="TableMETA">Table META</a></h3>
+        <p>
+            Cette table est utilisé pour les données qui ne méritent pas une table dédiée.<br> 
+            <br>
+            <figure>
+                <img src="images_Aide/Table_EMB_META_20200225.PNG" alt="Table_EMB_META">
+                <figcaption>Table "EMB_META" <span class=dateImage>(20200225)</span></figcaption>
+            </figure>
+            Par exemple, les données d'emballages des articles avec la cle "ListeDREAGER" vont dans un fichier supplémentaire.<br>
+            Avec cette table, nous pouvons rajouter des articles pour ce fichier supplémentaire.<br>
+            Nous pouvons aussi avoir un autre fichier supplémentaire.<br>
+            Il y a plein d'utilisation pour cette table...<br>
+        </p>
+    </section>
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Chargement des Paramètres d'emballage -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <section>
+        <h2><a id="ChargParam">Chargement des Paramètres d'emballage</a></h2>
+        <p>
+            Le chargement des paramètres se fait obligatoirement pendant l'initialisation.<br>
+            Il y a la possibilité de forcer la synchronisation lors du choix du produit par le bouton "Synchroniser Paramètres" en bas à droite.<br>
+            Ce bouton clignote si la synchronisation des paramètres n'a pas eu lieu dans les 23 dernières heures.<br>
+        </p>
+        <p>
+            Le chargement des paramètres d'emballage se fait de plusieures manières.<br>
+            Ci-dessous, vous trouvez un petit schéma expliquant les différentes manières de charger les données:
+        </p>
+        <figure>
+            <img src="images_Aide/chargement_donnees_Emballage.png" alt="chargement_donnees_emballage" border="1" width="1300px">
+            <figcaption>Diagramme expliquant le chargement des paramètres d'emballage</figcaption>
+        </figure>
+        <p>
+            Pour les <b style="color: #9147d0">FLATPROP</b>, il va chercher une partie des informations dans les fichiers "_PP.xml" sur le réseaux au chemin <a href="U:\MTD_PRD_TESTS\PARAM_TESTS\12">"U:\MTD_PRD_TESTS\PARAM_TESTS\12"</a>. D'autres informations sont en dur dans le programme ou tiré de la GPAO.<br>
+            Pour les <b style="color: #db923e">Autres produits</b>, il va chercher une partie des informations dans des tables BDD (nommé EMBALLAGE_PARAM et CODE_GESTION). Cette base de données est créée manuellement. Le reste des informations est tiré de la GPAO.<br>
+        </p>
+        <p>
+            Lors du choix du produit par scannage, si plusieurs produits ont le même code barre, il sera demandé à l'utilisateur de choisir entre ces produits.<br>
+            (exemple: S122.0008 et S121.0017, le S122.0008 a comme base le S121.0017.)<br>
+        </p>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- FLAPROP -->
+        <h3><a id="FLAPROP">FLAPROP</a></h3>
+        <p>
+            Les informations tirées des fichiers <b>_PP.xml</b> sont les suivantes:<br>
+        </p>
+        <ul>
+            <li>Indice</li>
+            <li>Code_Barre_Fixe</li>
+            <li>melange_des_lots_possible</li>
+            <li>affiche_code_barre_client</li>
+            <li>NB_PIECE_EMB</li>
+        </ul>
+        <p>
+        Les informations suivantes sont tirées de la <b style="color: blue">GPAO</b> en fonction du "NOS_ARTICLE", "SUFFIXE", CLC_DESIGNATION.<br>
+        On trouve ces dernières grâce au nom du fichier _PP.xml.<br>
+        </p>
+        <ul>
+            <li>ID_ARTICLE</li>
+            <li>INDICE_REV</li>
+        </ul>
+        <p>
+        Les données entrées <b style="color: palevioletred">manuellement</b> sont:
+        </p>
+        <ul>
+            <li>Famille: FLATPROP</li>
+            <li>Date: AASSIIII</li>
+            <li>Code_barre_fixe_fin: ''</li>
+            <li>Longueur_série: 8</li>
+        </ul>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Autres produits -->
+        <h3><a id="Autresproduits">Autres produits</a></h3>
+        <p>
+            Pour les autres produits, les informations suivantes sont tirées de la <b style="color: blue">GPAO:</b><br>
+            Le reste des informations vient de la <b style="color: palevioletred">table des tables BDD</b> qui sont décrite plus haut.
+        </p>
+         <ul>
+            <li>No_Valve_FAS</li>
+            <li>Suffixe</li>
+            <li>Designation</li>
+             <li>Nb_vlve_par_carton</li>
+             <li>id_article</li>
+             <li>Indice_rev</li>
+        </ul>
+    </section>
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Chargement des Paramètres pour les COC -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <section>
+        <h2><a id="ChargParamCOC">Les certificats de conformité</a></h2>
+        <p>
+            Plusieurs certificats sont envoyées au client. Ces certificats sont soit envoyé par e-mail ou directement mis dans le carton.<br>
+            Il n'y a pas de table sqlite car a chaque nouveau produits, il faudra de toute faç0on modifier le soft.<br>
+            On peut toujours utiliser la table "EMB_META" au besoin comme pour la liste DREAGER.<br>
+            Les fichiers modèle se trouve sur le réseau au chemin suivant: <a href="U:\MTD_PRD_TESTS\PARAM_TESTS\EMBALLAGE">"U:\MTD_PRD_TESTS\PARAM_TESTS\EMBALLAGE"</a>
+        </p>
+    </section>
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Divers -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <section>
+        <h2><a id="Divers">Divers</a></h2>
+        <h3><a id="Installation">Installation</a></h3>
+        <p>
+            Pour le bon fonctionnenement du software, le PC doit être pourvu de Microsoft Office (Word et Excel).<br>
+            Ces logiciels servent pour la création des fichiers "numéro de série".<br>
+        </p>
+        <p>
+            Après la première installation, il faudra rechercher le port de communication de lecteur de code barre et définir l'imprimante par défaut.<br>
+            Pour modifier ces paramètres, il faut aller dans l'onglet <i class="em em-hammer_and_wrench"></i> maintenance.<br>
+        </p>
+        <p>
+            Si le programme ne charge pas les données des blocs medic (depuis la BDD), il faut vérifier les fichiers dans le dossier "C:\Support_FAS\Administration". <br>
+            Il se peut que ce dossier ne soit pas à jour. <br>
+            Pour le mettre à jour, il suffit de supprimer le dichier "initialisation.xml" et de lancer le soft d'emballage.<br>
+        </p>
+        <h3><a id="GFS4470">Paramétrer le lecteur <i>(Gryphon GFS4470)</i></a></h3>
+        <p>
+            Le lecteur Grypgon GFS4470 peut être <i class="em em-gear"></i> paramétrer par le logiciel "Aladin" ou en scannant les codes dans la documentation.<br>
+            Vous trouvez la documentation concernant le Gryphon GFS4470 au chemin suivant: <a href="T:\Labo_PLZ\Tools\Datalogic\gryphon">T:\Labo_PLZ\Tools\Datalogic\gryphon</a><br>
+        </p>
+        <p>
+            Dans un premier temps, il faut sélectionner l'interface <b>"USB_COM"</b> et le mettre en mode (Reading Parameter => Scan Mode) <b>"Serial On Line"</b>.<br>
+            Pour que le lecteur arrive à lire les étiquettes de FLATPROP (étiquettes hautes résolutions), il faut activer le code <b>"Code ISBT 128"</b>.<br>
+            Il est possible que le lecteur ne lit pas correctement les codes barres 2D. Vérifiez que le lecteur soit bien en <b>clavier suisse</b>.<br>
+        </p>
+        <p style="font-style: italic">
+            Astuce: Essaies de scanner les codes barres 2D perpendiculairement au lecteur.<br>
+        </p>
+        <h3><a id="+Info">Où trouver d'autres informations?</a></h3>
+        <p>
+            Il est possible de trouver d'autres documentations dans le projet sur la GPAO au lien suivant:<br>
+            <a href="\\de.corp.norgren.com\dfs_global\EMEA\CH-Palezieux\GPAO_PLZ\GPAO_explorer\Machines\Projets\F00L0010">\\de.corp.norgren.com\dfs_global\EMEA\CH-Palezieux\GPAO_PLZ\GPAO_explorer\Machines\Projets\F00L0010</a><br>
+            ou sur perfoce au chemin suivant: ...\LabView_Platform\Projets\00_PRODUITS_EMBALLAGE_BDD<br>
+        </p>
+        <p>
+            Tu te dis : <i>"J'ai tout lu et mon problème est toujours présent"</i> ?<br>
+            Félicitation tu t'es donné de la peine pour résoudre ton problème tout(e) seul(e) malheureusement je crois qu'il est temps de demander de l'aide!<br>
+            Regardes en bas de la page, tu trouveras qui a créer le fichier et a fait la dernière modification. Vas-y lances toi et exposes leur ton problème!<br>
+            Si cela ne vous a pas aidé, tant pis c'est pas faute d'avoir essayé <i class="em em-stuck_out_tongue_winking_eye"></i>.<br>
+        </p>
+    </section>
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Version -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <section>
+        <h2><a id="Version">Historique des versions</a></h2>
+         <!-- ----------------------------------------------------------------------------------------- -->
+         <!-- Version: V20200318 -->
+        <h3><a id="V20200318">Version: 20200318</a></h3>
+        <p>
+            Création du fichier spécifique pour S002.0002<br>
+        </p>
+         <!-- Version: V20200311 -->
+        <h3><a id="V20200311">Version: 20200311</a></h3>
+        <p>
+            Tri par carton<br>
+        </p>
+         <!-- Version: V20200310 -->
+        <h3><a id="V20200310">Version: 20200310</a></h3>
+        <p>
+            Vérification de l'id_article et de l'indice lors d'une nouvelle commande<br>
+        </p>
+        <!-- Version: V20200303 -->
+        <h3><a id="V20200303">Version: 20200303</a></h3>
+        <p>
+            debeug<br>
+        </p>
+         <!-- Version: V20200225 -->
+        <h3><a id="V20200227">Version: 20200227</a></h3>
+        <p>
+            transfert BDD<br>
+        </p>
+         <!-- Version: V20200225 -->
+        <h3><a id="V20200225">Version: 20200225</a></h3>
+        <p>
+            Modif. tables BDD<br>
+        </p>
+         <!-- Version: V20200120 -->
+        <h3><a id="V20200120">Version: 20190607</a></h3>
+        <p>
+            Modification pour création certificats CHIPREG en arrière-plan<br>
+            + choix de l'imprimante <br>
+        </p>
+        <!-- Version: V20190507 -->
+        <h3><a id="V20190507">Version: 20190607</a></h3>
+        <p>
+            Debeug: création du dossier RESULT_TESTS<br>
+        </p>
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- Version: V20190507 -->
+        <h3><a id="V20190507">Version: 20190507</a></h3>
+        <p>
+            Version en Production.<br>
+            Elle va être testé sur des FASPROP et CHIPREG.<br>
+        </p>
+    </section>
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- Pied de page -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <footer>
+        Création: le 24.08.2018 par LTI<br>
+        Dernière MàJ: le 25.02.2020 par LTI<br>
+    </footer>
+</body>
+</html>
