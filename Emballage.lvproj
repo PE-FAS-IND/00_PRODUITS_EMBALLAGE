@@ -511,7 +511,7 @@ V20181026: Exécutable de test. Les certificats ne sont pas pris en charge.</Pro
 				<Property Name="Bld_localDestDir" Type="Path">/C/Data/Executables/00_EMBALLAGE_BDD</Property>
 				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{C6176D01-E9EE-47F8-A539-E1E96CCAE123}</Property>
-				<Property Name="Bld_version.build" Type="Int">5</Property>
+				<Property Name="Bld_version.build" Type="Int">6</Property>
 				<Property Name="Bld_version.major" Type="Int">2</Property>
 				<Property Name="Bld_version.minor" Type="Int">1</Property>
 				<Property Name="Bld_version.patch" Type="Int">2</Property>
@@ -649,7 +649,7 @@ V20181026: Exécutable de test. Les certificats ne sont pas pris en charge.</Pro
 				<Property Name="INST_installerName" Type="Str">setup.exe</Property>
 				<Property Name="INST_language" Type="Int">12</Property>
 				<Property Name="INST_productName" Type="Str">Install_Emballage_BDD</Property>
-				<Property Name="INST_productVersion" Type="Str">2.1.16</Property>
+				<Property Name="INST_productVersion" Type="Str">2.1.17</Property>
 				<Property Name="InstSpecBitness" Type="Str">32-bit</Property>
 				<Property Name="InstSpecVersion" Type="Str">20018000</Property>
 				<Property Name="MSI_arpCompany" Type="Str">FAS Medic Sa</Property>
